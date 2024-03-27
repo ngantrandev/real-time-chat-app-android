@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void setEvent() {
         binding.imageSignOut.setOnClickListener(v -> signOut());
+        binding.fabNewChat.setOnClickListener(v ->startActivity( new Intent(getApplicationContext(), UserActivity.class)));
     }
 
     private void setControl() {
@@ -63,7 +64,6 @@ public class MainActivity extends AppCompatActivity {
         DocumentReference documentReference = db.collection(Constants.KEY_COLLECTION_USERS)
                 .document(preferenceManager.getString(Constants.KEY_USER_ID));
         documentReference.update(Constants.KEY_FCM_TOKEN, token)
-                .addOnSuccessListener(unused -> showToast("Token updated successfully"))
                 .addOnFailureListener(e -> showToast("Unable to update token"));
     }
 
