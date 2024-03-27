@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.androidApplication)
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -12,7 +13,7 @@ android {
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
-
+        multiDexEnabled = true
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -42,8 +43,16 @@ dependencies {
     androidTestImplementation(libs.espresso.core)
 
     // Scalable size unit ( for different screen size)
-    implementation("com.intuit.sdp:sdp-android:1.0.6")
-    implementation("com.intuit.ssp:ssp-android:1.0.6")
+    implementation(libs.sdp.android)
+    implementation(libs.ssp.android)
     // rounded imageview
     implementation("com.makeramen:roundedimageview:2.3.0")
+
+    // firebase
+    implementation(libs.firebase.messaging)
+    implementation(platform("com.google.firebase:firebase-bom:32.8.0"))
+    implementation("com.google.firebase:firebase-firestore")
+
+    // multiDex
+    implementation("androidx.multidex:multidex:2.0.1")
 }
