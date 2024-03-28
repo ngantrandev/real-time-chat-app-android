@@ -4,7 +4,32 @@ import java.util.Date;
 
 public class ChatMessage {
     private String senderId, receivedId, message, dateTime;
+    private String conversionId,conversionName,conversionImage;
     private Date dateObject;
+
+    public String getConversionId() {
+        return conversionId;
+    }
+
+    public void setConversionId(String conversionId) {
+        this.conversionId = conversionId;
+    }
+
+    public String getConversionName() {
+        return conversionName;
+    }
+
+    public void setConversionName(String conversionName) {
+        this.conversionName = conversionName;
+    }
+
+    public String getConversionImage() {
+        return conversionImage;
+    }
+
+    public void setConversionImage(String conversionImage) {
+        this.conversionImage = conversionImage;
+    }
 
     public Date getDateObject() {
         return dateObject;
