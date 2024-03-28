@@ -13,7 +13,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.app.realtimechatapp.R;
 import com.app.realtimechatapp.adapters.RecentlyConversationsCAdapter;
 import com.app.realtimechatapp.databinding.ActivityMainBinding;
+import com.app.realtimechatapp.listeners.ConversionListener;
 import com.app.realtimechatapp.models.ChatMessage;
+import com.app.realtimechatapp.models.User;
 import com.app.realtimechatapp.ultilities.Constants;
 import com.app.realtimechatapp.ultilities.PreferenceManager;
 import com.google.firebase.firestore.DocumentChange;
@@ -29,7 +31,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity{
+public class MainActivity extends AppCompatActivity implements ConversionListener {
     private ActivityMainBinding binding;
     private PreferenceManager preferenceManager;
     private List<ChatMessage> conversations;
@@ -61,7 +63,7 @@ public class MainActivity extends AppCompatActivity{
         getToken();
 
         conversations = new ArrayList<>();
-        recentlyConversationsCAdapter = new RecentlyConversationsCAdapter(conversations);
+        recentlyConversationsCAdapter = new RecentlyConversationsCAdapter(conversations, this);
         binding.conversationRecyclerView.setAdapter(recentlyConversationsCAdapter);
         db = FirebaseFirestore.getInstance();
     }
@@ -77,7 +79,7 @@ public class MainActivity extends AppCompatActivity{
         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
     }
 
-    private void listenConversation(){
+    private void listenConversation() {
         db.collection(Constants.KEY_COLLECTION_CONVERSATIONS)
                 .whereEqualTo(Constants.KEY_SENDER_ID, preferenceManager.getString(Constants.KEY_USER_ID))
                 .addSnapshotListener(eventListener);
@@ -161,5 +163,12 @@ public class MainActivity extends AppCompatActivity{
                     finish();
                 })
                 .addOnFailureListener(e -> showToast("Unable to sign out"));
+    }
+
+    @Override
+    public void onConversionClicked(User user) {
+        Intent intent = new Intent(getApplicationContext(), ChatActivity.class);
+        intent.putExtra(Constants.KEY_USER, user);
+        startActivity(intent);
     }
 }

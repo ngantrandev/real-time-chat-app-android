@@ -7,16 +7,20 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.app.realtimechatapp.databinding.ItemContainerRecentlyConversationBinding;
+import com.app.realtimechatapp.listeners.ConversionListener;
 import com.app.realtimechatapp.models.ChatMessage;
+import com.app.realtimechatapp.models.User;
 import com.app.realtimechatapp.ultilities.Ultil;
 
 import java.util.List;
 
 public class RecentlyConversationsCAdapter extends RecyclerView.Adapter<RecentlyConversationsCAdapter.ConversationViewHolder> {
     private final List<ChatMessage> chatMessageList;
+    private final ConversionListener conversionListener;
 
-    public RecentlyConversationsCAdapter(List<ChatMessage> chatMessageList) {
+    public RecentlyConversationsCAdapter(List<ChatMessage> chatMessageList, ConversionListener conversionListener) {
         this.chatMessageList = chatMessageList;
+        this.conversionListener = conversionListener;
     }
 
     @NonNull
@@ -52,6 +56,15 @@ public class RecentlyConversationsCAdapter extends RecyclerView.Adapter<Recently
             binding.textName.setText(chatMessage.getConversionName());
             binding.textRecentMessage.setText(chatMessage.getMessage());
             binding.imageProfile.setImageBitmap(Ultil.getBitmapFromBase64Text(chatMessage.getConversionImage()));
+
+            binding.getRoot().setOnClickListener(v->{
+                User user = new User();
+                user.setId(chatMessage.getConversionId());
+                user.setName(chatMessage.getConversionName());
+                user.setImage(chatMessage.getConversionImage());
+
+                conversionListener.onConversionClicked(user);
+            });
         }
     }
 }
