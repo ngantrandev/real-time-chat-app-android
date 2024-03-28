@@ -1,7 +1,18 @@
 package com.app.realtimechatapp.models;
 
+import java.util.Date;
+
 public class ChatMessage {
     private String senderId, receivedId, message, dateTime;
+    private Date dateObject;
+
+    public Date getDateObject() {
+        return dateObject;
+    }
+
+    public void setDateObject(Date dateObject) {
+        this.dateObject = dateObject;
+    }
 
     public String getSenderId() {
         return senderId;
