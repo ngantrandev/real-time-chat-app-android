@@ -70,9 +70,10 @@
         android:layout_marginRight="@dimen/_24sdp"
         android:layout_marginBottom="@dimen/_24sdp"
         android:backgroundTint="@color/primary"
+
         android:contentDescription="@string/app_name"
         android:src="@drawable/ic_add"
-        android:tint="@color/white"
+        app:tint="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

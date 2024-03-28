@@ -1,5 +1,6 @@
 package com.app.realtimechatapp.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
@@ -12,6 +13,7 @@ import androidx.core.view.WindowInsetsCompat;
 import com.app.realtimechatapp.R;
 import com.app.realtimechatapp.adapters.UserAdapter;
 import com.app.realtimechatapp.databinding.ActivityUserBinding;
+import com.app.realtimechatapp.listeners.UserListener;
 import com.app.realtimechatapp.models.User;
 import com.app.realtimechatapp.ultilities.Constants;
 import com.app.realtimechatapp.ultilities.PreferenceManager;
@@ -21,7 +23,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserActivity extends AppCompatActivity {
+public class UserActivity extends AppCompatActivity implements UserListener {
 
     private ActivityUserBinding binding;
     private PreferenceManager preferenceManager;
@@ -58,7 +60,7 @@ public class UserActivity extends AppCompatActivity {
                         }
 
                         if (users.size() > 0) {
-                            UserAdapter userAdapter = new UserAdapter(users);
+                            UserAdapter userAdapter = new UserAdapter(users, this);
                             binding.userRecyclerView.setAdapter(userAdapter);
                             binding.userRecyclerView.setVisibility(View.VISIBLE);
 
@@ -95,5 +97,13 @@ public class UserActivity extends AppCompatActivity {
 
     private void showErrorMessage() {
         binding.textErrorMessage.setText(String.format("%s", "No user available"));
+    }
+
+    @Override
+    public void userOnClicked(User user) {
+        Intent intent = new Intent(getApplicationContext(), ChatActivity.class);
+        intent.putExtra(Constants.KEY_USER, user);
+        startActivity(intent);
+        finish();
     }
 }
