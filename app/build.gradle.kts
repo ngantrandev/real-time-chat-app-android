@@ -55,4 +55,8 @@ dependencies {
 
     // multiDex
     implementation("androidx.multidex:multidex:2.0.1")
+
+    // retrofit
+    implementation(libs.retrofit)
+    implementation(libs.converter.scalars)
 }
